@@ -20,14 +20,14 @@ let errorLogin = false;
 
 function ErrorLogin(){
     if (errorLogin){
-        errorLogin=false;
         return <Alert severity="error">Bad credentials!</Alert>
-
+        errorLogin=false;
     }
     else{
         return null;
     }
 }
+
 const WhiteTextTypography = withStyles({
     root: {
         color: "#000000"
@@ -52,7 +52,6 @@ export default function Login(){
         })
             .then(function (response) {
                 let name = response.data.name;
-                console.log(name);
                 let surnames = response.data.surnames;
                 let mail = response.data.mail;
                 let id = response.data.id;

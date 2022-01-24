@@ -15,7 +15,7 @@ import {
     InputBase, ListItemButton, Menu, MenuItem,
     SpeedDial,
     SpeedDialAction,
-    Toolbar
+    Toolbar, Tooltip
 } from "@mui/material";
 import {styled, ThemeProvider} from "@mui/styles";
 import MenuIcon from '@mui/icons-material/Menu';
@@ -111,20 +111,27 @@ class SideBar extends React.Component {
                             component="div"
                             sx={{ flexGrow: 0, display: { xs: 'none', sm: 'block' } }}
                         >
-                            <IconButton >
-                                <ChatIcon sx={{color:"#b1b3b5"}}/>
-                            </IconButton>
-                            <IconButton>
-                                <MoreVertIcon sx={{color: "#b1b3b5"}}/>
-                            </IconButton>
-                            <IconButton onClick={this.handleClickLogout} sx={{color:"#b1b3b5"}}>
-                                <LogoutIcon/>
-                            </IconButton>
+                            <Tooltip title="New Chat">
+                                <IconButton >
+                                    <ChatIcon sx={{color:"#b1b3b5"}}/>
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="More...">
+                                <IconButton>
+                                    <MoreVertIcon sx={{color: "#b1b3b5"}}/>
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Logout">
+                                <IconButton onClick={this.handleClickLogout} sx={{color:"#b1b3b5"}}>
+                                    <LogoutIcon/>
+                                </IconButton>
+                            </Tooltip>
                         </Typography>
                     </Toolbar>
 
                 </AppBar>
-                <List sx={{ width: '100%', maxWidth: "100%", backgroundColor:"#131c21" }}>
+
+                <List sx={{ width: '100%', maxWidth: "100%",backgroundColor:"#131c21" }}>
                     {this.state._loading ? <CircularProgress /> : null}
                     {messages.map((message) => (
                         <div
