@@ -1,0 +1,6 @@
+drop user if exists 'ws'@'localhost';
+drop database if exists whatsapp;
+create database whatsapp;
+CREATE USER 'ws'@'localhost' IDENTIFIED BY 'test1234';
+GRANT ALL PRIVILEGES ON whatsapp.* TO 'ws'@'localhost';
+FLUSH PRIVILEGES;
