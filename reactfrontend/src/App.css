@@ -53,3 +53,6 @@
 .css-140v5ue-MuiInputBase-root-MuiInput-root:before {
   border-bottom: 1px solid rgba(255, 255, 255, 0.42) !important;
 }
+.css-bn8pyn-MuiFormLabel-root-MuiInputLabel-root{
+  color: #66bb6a !important;
+}

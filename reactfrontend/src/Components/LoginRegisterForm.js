@@ -7,7 +7,7 @@ export default function LoginRegisterForm(props){
 
     if (!props.showRegister){
         return(
-            <Grid item xs={3}>
+            <Grid item xs={3} width="20%">
                 <TextField
                     required
                     fullWidth
@@ -36,7 +36,7 @@ export default function LoginRegisterForm(props){
     }
     else{
         return(
-            <Grid item xs={3}>
+            <Grid item xs={3} width="20%">
                 <TextField
                     required
                     fullWidth

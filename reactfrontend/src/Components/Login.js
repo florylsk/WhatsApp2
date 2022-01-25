@@ -123,7 +123,7 @@ export default function Login(){
                  justifyContent="center"
                  alignItems="center"
                  minHeight="100vh"
-                bgcolor="#263237">
+                 bgcolor="#141e23">
                 <Grid container spacing={2} alignItems="center" justify="center" direction="column">
                     <Grid item xs={3}>
                             <img src={TestImage} style={{borderRadius:"50%"}} />
@@ -144,9 +144,13 @@ export default function Login(){
                         <Button onClick={!ShowRegister ? handleShowRegisterClick : handleShowLoginClick} size="small" color="success" sx={{ml:2}}>Or {!ShowRegister ? "register" : "login"} here</Button>
                     </Grid>
                     <Grid item xs={3}>
-                        <p style={{color:"#ffffff"}}>
-                            {errorLogin ? "Wrong credentials!" : null }
+                        <p style={{color:"#66bb6a"}}>
+
                             {correctRegister ? "User Registered Successfully" : null}
+
+                        </p>
+                        <p style={{color:"#e10303"}}>
+                            {errorLogin ? "Wrong credentials!" : null }
                             {errorRegister ? "Something went wrong while registering the user" : null}
                         </p>
                     </Grid>
