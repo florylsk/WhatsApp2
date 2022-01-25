@@ -68,6 +68,16 @@ const handleSubmit = (event) => {
 
 let orderedM=null;
 
+function compare( a, b ) {
+    if ( a.timeMessage < b.timeMessage ){
+        return -1;
+    }
+    if ( a.timeMessage > b.timeMessage ){
+        return 1;
+    }
+    return 0;
+}
+
 class MainChat extends React.Component{
     constructor(props) {
         super(props);
@@ -79,7 +89,7 @@ class MainChat extends React.Component{
 
 
     render(){
-        const orderedMessages = this.props.allMessages!= null ? this.props.allMessages.reverse() : null;
+        const orderedMessages = this.props.allMessages!= null ? this.props.allMessages.sort(compare).reverse() : null;
         if (this.props.sender == null){
             return (
                 <Grid sx={{backgroundColor:"#262d31", height: "100%"}} container
@@ -136,11 +146,11 @@ class MainChat extends React.Component{
                     </AppBar>
                         <Paper style={styles.paperContainer} square={true} height="100%" sx={{display:"flex", flexDirection:"column-reverse"}}>
                             {this.props.allMessages ==null ? <LinearProgress color="success" /> : null}
-                            {this.props.allMessages != null ? this.props.allMessages.map((message) => (
+                            {this.props.allMessages != null ? orderedMessages.map((message) => (
                                 <div
                                     key={message.messageTime}>
 
-                                    <Card sx={message.sender.mail == this.props.sender.mail ? { maxWidth: 500, backgroundColor:"#262d31",borderRadius:20, maxHeight:50 } : { maxWidth: 500, backgroundColor:"#056162",borderRadius:20, maxHeight:50, float:"right" }}>
+                                    <Card sx={message.sender.mail == this.props.sender.mail ? { maxWidth: 500, backgroundColor:"#262d31",borderRadius:20, maxHeight:50, float:"left", mb:1 } : { maxWidth: 500, backgroundColor:"#056162",borderRadius:20, maxHeight:50, float:"right",mb:1 }}>
                                         <CardContent>
                                             <Typography variant="body2" sx={{color:"#Ffffff"}}>
                                                 {message.message}

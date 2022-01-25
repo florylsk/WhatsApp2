@@ -17,10 +17,12 @@ import {ThemeProvider} from "@mui/styles"
 import BackGround from "../Assets/Images/test.jpg"
 import TestImage from "../Assets/Images/wsBlack.png";
 import {styled} from "@mui/system";
+import LoginRegisterForm from "./LoginRegisterForm";
 
 
 let errorLogin = false;
-
+let correctRegister = false;
+let errorRegister = false;
 function ErrorLogin(){
     if (errorLogin){
         return <Alert severity="error">Bad credentials!</Alert>
@@ -38,8 +40,10 @@ const WhiteTextTypography = withStyles({
 })(Typography);
 
 
+
+
 export default function Login(){
-    const handleSubmit = (event) => {
+    const handleSubmitLogin = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         let mail= data.get('mail');
@@ -67,10 +71,55 @@ export default function Login(){
             });
     };
 
+    const handleSubmitRegister = (event) =>{
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        let name= data.get('name');
+        let surnames= data.get('surnames');
+        let mail= data.get('mail');
+        let password= data.get('password');
+        let user = {
+            name: name,
+            surnames: surnames,
+            mail: mail,
+            password: password,
+        };
+        axios({
+            method: "post",
+            url: "http://localhost:8081/api/v1/users",
+            data: user,
+            headers: { "Content-Type": "application/json" },
+        })
+            .then(function (response) {
+                correctRegister=true;
+            })
+            .catch(function (response) {
+                errorRegister=true;
+            });
+
+
+    }
+
+    const [ShowRegister,setShowRegister] = React.useState(false);
+
+    const handleShowRegisterClick = ()=>{
+        errorLogin=false;
+        errorRegister=false;
+        correctRegister=false;
+        setShowRegister(true);
+    }
+    const handleShowLoginClick = () =>{
+        errorLogin=false;
+        errorRegister=false;
+        correctRegister=false;
+        setShowRegister(false);
+    }
+
+
     return (
 
         <div>
-            <Box component="form" noValidate onSubmit={handleSubmit} display="flex"
+            <Box component="form" noValidate onSubmit={!ShowRegister ? handleSubmitLogin: handleSubmitRegister} display="flex"
                  justifyContent="center"
                  alignItems="center"
                  minHeight="100vh"
@@ -82,33 +131,7 @@ export default function Login(){
                             WhatsApp 2
                         </WhiteTextTypography>
                     </Grid>
-                    <Grid item xs={3}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="mail"
-                                label="Mail"
-                                name="mail"
-                                autoComplete="mail"
-                                variant="standard"
-                                color="success"
-                            />
-
-
-                    </Grid>
-                    <Grid item xs={3}>
-                        <TextField
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="new-password"
-                            variant="standard"
-                            color="success"
-                        />
-                    </Grid>
+                    <LoginRegisterForm showRegister={ShowRegister}/>
                     <Grid item xs={3}>
                         <Button
                             type="submit"
@@ -116,11 +139,16 @@ export default function Login(){
                             color="success"
 
                         >
-                            Login
+                            {!ShowRegister ? "Login" : "Register"}
                         </Button>
+                        <Button onClick={!ShowRegister ? handleShowRegisterClick : handleShowLoginClick} size="small" color="success" sx={{ml:2}}>Or {!ShowRegister ? "register" : "login"} here</Button>
                     </Grid>
                     <Grid item xs={3}>
-                        <ErrorLogin/>
+                        <p style={{color:"#ffffff"}}>
+                            {errorLogin ? "Wrong credentials!" : null }
+                            {correctRegister ? "User Registered Successfully" : null}
+                            {errorRegister ? "Something went wrong while registering the user" : null}
+                        </p>
                     </Grid>
                 </Grid>
 

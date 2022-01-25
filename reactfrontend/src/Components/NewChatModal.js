@@ -24,14 +24,12 @@ const style = {
     p: 4,
 };
 
-
+let userDoesntExist=false;
 export default function NewChatModal(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-
-
+    userDoesntExist=props.userDoesntExist;
     return (
         <div>
             <Tooltip title="New Chat">
@@ -56,6 +54,7 @@ export default function NewChatModal(props) {
                         <Button type="submit" variant="outlined" color="success" endIcon={<SendIcon />} sx={{color:"#ffffff",mt:1}}>
                             Send Message
                         </Button>
+                        <p style={{color:"#e10303"}}> {userDoesntExist ? "User doesnt exist!" : null}</p>
                     </Box>
 
 

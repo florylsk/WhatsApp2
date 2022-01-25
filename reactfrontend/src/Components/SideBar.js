@@ -33,6 +33,7 @@ import NewChatModal from "./NewChatModal";
 
 let senderReading=null;
 let allMessages=null;
+let userDoesntExist=false;
 class SideBar extends React.Component {
     constructor(props){
         super(props);
@@ -68,7 +69,27 @@ class SideBar extends React.Component {
                 for (let j=0;j<body.length;j++){
                     if (i!=j){
                         if (body[j].sender.mail == body[i].sender.mail){
-                            body.splice(j,1);
+                            if (body[j].timeMessage < body[i].timeMessage){
+                                body.splice(j,1);
+                            }
+                            else{
+                                body.splice(i,1);
+                            }
+                        }
+                    }
+                }
+
+            }
+            for (let i =0;i<body.length;i++){
+                for (let j=0;j<body.length;j++){
+                    if (i!=j){
+                        if (body[j].sender.mail == body[i].sender.mail){
+                            if (body[j].timeMessage < body[i].timeMessage){
+                                body.splice(j,1);
+                            }
+                            else{
+                                body.splice(i,1);
+                            }
                         }
                     }
                 }
@@ -84,7 +105,27 @@ class SideBar extends React.Component {
                 for (let j=0;j<body.length;j++){
                     if (i!=j){
                         if (body[j].sender.mail == body[i].sender.mail){
-                            body.splice(j,1);
+                            if (body[j].timeMessage < body[i].timeMessage){
+                                body.splice(j,1);
+                            }
+                            else{
+                                body.splice(i,1);
+                            }
+                        }
+                    }
+                }
+
+            }
+            for (let i =0;i<body.length;i++){
+                for (let j=0;j<body.length;j++){
+                    if (i!=j){
+                        if (body[j].sender.mail == body[i].sender.mail){
+                            if (body[j].timeMessage < body[i].timeMessage){
+                                body.splice(j,1);
+                            }
+                            else{
+                                body.splice(i,1);
+                            }
                         }
                     }
                 }
@@ -130,8 +171,10 @@ class SideBar extends React.Component {
             let user_response = await fetch("http://localhost:8081/api/v1/users/by-mail/" + mail);
             let user_selected = await user_response.json();
             console.log(user_selected);
+            userDoesntExist=false;
             senderReading=user_selected;
         }catch(error){
+            userDoesntExist=true;
             console.log("doesnt exist");
         }
 
@@ -155,7 +198,7 @@ class SideBar extends React.Component {
                             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                         >
                         </Typography>
-                            <NewChatModal handleNewChatSubmit={this.handleNewChatSubmit}/>
+                            <NewChatModal handleNewChatSubmit={this.handleNewChatSubmit} userDoesntExist={userDoesntExist}/>
                             <Tooltip title="More...">
                                 <IconButton sx={{"&:hover":{backgroundColor: "#323739"}}}>
                                     <MoreVertIcon sx={{color: "#b1b3b5"}}/>
