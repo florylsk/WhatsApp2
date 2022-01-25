@@ -28,6 +28,7 @@ import {responsiveFontSizes } from '@mui/material/styles';
 import Cookies from 'js-cookie';
 import Button from "@mui/material/Button";
 import MainChat from "./MainChat";
+import NewChatModal from "./NewChatModal";
 
 
 let senderReading=null;
@@ -117,6 +118,25 @@ class SideBar extends React.Component {
 
     }
 
+    handleNewMessageClick(){
+
+    }
+
+     async handleNewChatSubmit (event) {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        let mail = data.get('mailUser');
+        try{
+            let user_response = await fetch("http://localhost:8081/api/v1/users/by-mail/" + mail);
+            let user_selected = await user_response.json();
+            console.log(user_selected);
+            senderReading=user_selected;
+        }catch(error){
+            console.log("doesnt exist");
+        }
+
+
+    };
 
     render(){
         const {messages} = this.state;
@@ -135,17 +155,7 @@ class SideBar extends React.Component {
                             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                         >
                         </Typography>
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            sx={{ flexGrow: 0, display: { xs: 'none', sm: 'block' } }}
-                        >
-                            <Tooltip title="New Chat">
-                                <IconButton sx={{"&:hover":{backgroundColor: "#323739"}}}>
-                                    <ChatIcon sx={{color:"#b1b3b5"}}/>
-                                </IconButton>
-                            </Tooltip>
+                            <NewChatModal handleNewChatSubmit={this.handleNewChatSubmit}/>
                             <Tooltip title="More...">
                                 <IconButton sx={{"&:hover":{backgroundColor: "#323739"}}}>
                                     <MoreVertIcon sx={{color: "#b1b3b5"}}/>
@@ -156,12 +166,11 @@ class SideBar extends React.Component {
                                     <LogoutIcon/>
                                 </IconButton>
                             </Tooltip>
-                        </Typography>
                     </Toolbar>
 
                 </AppBar>
 
-                <List sx={{ width: '100%', maxWidth: "100%",backgroundColor:"#131c21" }}>
+                <List sx={{ width: '100%', maxWidth: "100%",height:866, maxHeight:"100%", backgroundColor:"#131c21" }}>
                     {this.state._loading ? <CircularProgress /> : null}
                     {messages.map((message) => (
                         <div

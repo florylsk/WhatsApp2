@@ -12,8 +12,11 @@ import Button
 import * as React
     from "react";
 import Cookies from 'js-cookie';
-import {Grid, TextField, Alert} from "@mui/material";
+import {Grid, TextField, Alert, Paper, createTheme} from "@mui/material";
+import {ThemeProvider} from "@mui/styles"
 import BackGround from "../Assets/Images/test.jpg"
+import TestImage from "../Assets/Images/wsBlack.png";
+import {styled} from "@mui/system";
 
 
 let errorLogin = false;
@@ -30,9 +33,10 @@ function ErrorLogin(){
 
 const WhiteTextTypography = withStyles({
     root: {
-        color: "#000000"
+        color: "#CDD2D7"
     }
 })(Typography);
+
 
 export default function Login(){
     const handleSubmit = (event) => {
@@ -63,29 +67,34 @@ export default function Login(){
             });
     };
 
-
     return (
+
         <div>
             <Box component="form" noValidate onSubmit={handleSubmit} display="flex"
                  justifyContent="center"
                  alignItems="center"
-                 minHeight="100vh">
+                 minHeight="100vh"
+                bgcolor="#263237">
                 <Grid container spacing={2} alignItems="center" justify="center" direction="column">
                     <Grid item xs={3}>
-                        <WhiteTextTypography variant="h3" sx={{mb:5}}>
+                            <img src={TestImage} style={{borderRadius:"50%"}} />
+                        <WhiteTextTypography variant="h3" sx={{mb:5}} color="success">
                             WhatsApp 2
                         </WhiteTextTypography>
                     </Grid>
                     <Grid item xs={3}>
-                        <TextField
-                            required
-                            fullWidth
-                            id="mail"
-                            label="Mail"
-                            name="mail"
-                            autoComplete="mail"
+                            <TextField
+                                required
+                                fullWidth
+                                id="mail"
+                                label="Mail"
+                                name="mail"
+                                autoComplete="mail"
+                                variant="standard"
+                                color="success"
+                            />
 
-                        />
+
                     </Grid>
                     <Grid item xs={3}>
                         <TextField
@@ -96,12 +105,16 @@ export default function Login(){
                             type="password"
                             id="password"
                             autoComplete="new-password"
+                            variant="standard"
+                            color="success"
                         />
                     </Grid>
                     <Grid item xs={3}>
                         <Button
                             type="submit"
-                            variant="contained"
+                            variant="outlined"
+                            color="success"
+
                         >
                             Login
                         </Button>

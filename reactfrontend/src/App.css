@@ -40,3 +40,16 @@
 .selected_chat{
    background-color: #323739 !important;
 }
+
+.css-llg55a-MuiFormLabel-root-MuiInputLabel-root{
+  color:#CDD2D7 !important;
+}
+.css-140v5ue-MuiInputBase-root-MuiInput-root{
+  color: #CDD2D7 !important;
+}
+.css-1g048a3-MuiInputBase-root-MuiInput-root {
+  color: #CDD2D7 !important;
+}
+.css-140v5ue-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.42) !important;
+}

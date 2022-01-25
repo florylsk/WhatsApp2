@@ -47,7 +47,7 @@ const handleSubmit = (event) => {
     let dataJSON={
         sender: {name:sender_name,surnames:sender_surnames,mail:sender_mail},
         receiver: {name:receiver_name,surnames:receiver_surnames,mail:receiver_mail},
-        time: Date.now(),
+        timeMessage: Date.now(),
         message:message,
     };
     axios({
@@ -57,12 +57,16 @@ const handleSubmit = (event) => {
         headers: { "Content-Type": "application/json" },
     })
         .then(function (response) {
-
+            Array.from(document.querySelectorAll("input")).forEach(
+                input => (input.value = "")
+            );
         })
         .catch(function (response) {
                 console.log(response);
         });
 };
+
+let orderedM=null;
 
 class MainChat extends React.Component{
     constructor(props) {
@@ -75,7 +79,7 @@ class MainChat extends React.Component{
 
 
     render(){
-        const {orderedMessages} = this.state;
+        const orderedMessages = this.props.allMessages!= null ? this.props.allMessages.reverse() : null;
         if (this.props.sender == null){
             return (
                 <Grid sx={{backgroundColor:"#262d31", height: "100%"}} container
@@ -134,7 +138,7 @@ class MainChat extends React.Component{
                             {this.props.allMessages ==null ? <LinearProgress color="success" /> : null}
                             {this.props.allMessages != null ? this.props.allMessages.map((message) => (
                                 <div
-                                    key={message.message}>
+                                    key={message.messageTime}>
 
                                     <Card sx={message.sender.mail == this.props.sender.mail ? { maxWidth: 500, backgroundColor:"#262d31",borderRadius:20, maxHeight:50 } : { maxWidth: 500, backgroundColor:"#056162",borderRadius:20, maxHeight:50, float:"right" }}>
                                         <CardContent>
@@ -160,8 +164,8 @@ class MainChat extends React.Component{
                             <IconButton>
                                 <AttachFileIcon sx={{color:"#b1b3b5"}} fontSize="medium"/>
                             </IconButton>
-                            <Box component="form" onSubmit={handleSubmit}>
-                                <UnstyledInput name="message" />
+                            <Box component="form" onSubmit={handleSubmit} >
+                                <UnstyledInput name="message"/>
                                 <input type="hidden" name="sender_name" value={this.props.receiver.name}/>
                                 <input type="hidden" name="sender_surnames" value={this.props.receiver.surnames}/>
                                 <input type="hidden" name="sender_mail" value={this.props.receiver.mail}/>
