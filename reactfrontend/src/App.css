@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.selected_chat{
+   background-color: #323739 !important;
+}

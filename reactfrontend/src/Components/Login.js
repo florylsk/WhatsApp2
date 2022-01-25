@@ -73,7 +73,7 @@ export default function Login(){
                 <Grid container spacing={2} alignItems="center" justify="center" direction="column">
                     <Grid item xs={3}>
                         <WhiteTextTypography variant="h3" sx={{mb:5}}>
-                            WhatsApp 2 Login
+                            WhatsApp 2
                         </WhiteTextTypography>
                     </Grid>
                     <Grid item xs={3}>
