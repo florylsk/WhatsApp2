@@ -25,11 +25,13 @@ const style = {
 };
 
 let userDoesntExist=false;
+let sameMailAsUser = false;
 export default function NewChatModal(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     userDoesntExist=props.userDoesntExist;
+    sameMailAsUser=props.sameMailAsUser;
     return (
         <div>
             <Tooltip title="New Chat">
@@ -55,6 +57,7 @@ export default function NewChatModal(props) {
                             Send Message
                         </Button>
                         <p style={{color:"#e10303"}}> {userDoesntExist ? "User doesnt exist!" : null}</p>
+                        <p style={{color:"#e10303"}}> {sameMailAsUser ? "That's your email!" : null}</p>
                     </Box>
 
 

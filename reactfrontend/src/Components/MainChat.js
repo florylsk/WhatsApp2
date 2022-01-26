@@ -148,7 +148,7 @@ class MainChat extends React.Component{
                             {this.props.allMessages ==null ? <LinearProgress color="success" /> : null}
                             {this.props.allMessages != null ? orderedMessages.map((message) => (
                                 <div
-                                    key={message.messageTime}>
+                                    key={message.timeMessage}>
 
                                     <Card sx={message.sender.mail == this.props.sender.mail ? { maxWidth: 500, backgroundColor:"#262d31",borderRadius:20, maxHeight:50, float:"left", mb:1 } : { maxWidth: 500, backgroundColor:"#056162",borderRadius:20, maxHeight:50, float:"right",mb:1 }}>
                                         <CardContent>
