@@ -27,7 +27,7 @@ class App extends Component{
     async componentDidMount() {
         this.timerID = setInterval(
             () => this.checkUserLogged(),
-            300
+            200
         );
     }
     async checkUserLogged(){

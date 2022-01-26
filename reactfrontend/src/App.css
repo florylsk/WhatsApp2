@@ -56,3 +56,11 @@
 .css-bn8pyn-MuiFormLabel-root-MuiInputLabel-root{
   color: #66bb6a !important;
 }
+
+.css-1435s9z-MuiInputBase-root-MuiInput-root{
+  color:#CDD2D7 !important;
+}
+
+.css-1435s9z-MuiInputBase-root-MuiInput-root::before{
+  border-bottom: 1px solid rgb(157, 162, 166) !important;
+}

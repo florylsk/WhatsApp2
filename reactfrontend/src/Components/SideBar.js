@@ -131,7 +131,6 @@ class SideBar extends React.Component {
             const response2 = await fetch("http://localhost:8082/api/v1/messages/sender/"+this.props.user.mail);
             const __body = await response2.json();
             const body = await _body.concat(__body);
-            //TODO: properly get the last message of each person instead of randomly deleting duplicated messages
             let unique_senders = []
             //find unique senders
             body.forEach(element => {
@@ -150,18 +149,21 @@ class SideBar extends React.Component {
             })
             let unordered_latest_messages=[]
             //find all messages with the unique senders
-            body.forEach(message =>{
-                unique_senders.forEach(unique_sender =>{
+            for (const message of body) {
+                for (const unique_sender of unique_senders) {
                     if (message.sender.mail === unique_sender.mail || message.receiver.mail === unique_sender.mail){
+                        let responsePfp = await fetch("http://localhost:8081/api/v1/users/by-mail/"+unique_sender.mail);
+                        let responseBody=await responsePfp.json();
+                        unique_sender.pfp = responseBody.pfp;
                         let sidebar_struct ={
                             message: message.message,
                             sender: unique_sender,
-                            timeMessage: message.timeMessage
+                            timeMessage: message.timeMessage,
                         }
                         unordered_latest_messages.push(sidebar_struct);
                     }
-                })
-            })
+                }
+            }
             //keep only latest message of each unique sender
             unordered_latest_messages.forEach(message =>{
                 unordered_latest_messages.forEach(_message =>{
@@ -227,18 +229,21 @@ class SideBar extends React.Component {
             })
             let unordered_latest_messages=[]
             //find all messages with the unique senders
-            body.forEach(message =>{
-                unique_senders.forEach(unique_sender =>{
+            for (const message of body) {
+                for (const unique_sender of unique_senders) {
                     if (message.sender.mail === unique_sender.mail || message.receiver.mail === unique_sender.mail){
+                        let responsePfp = await fetch("http://localhost:8081/api/v1/users/by-mail/"+unique_sender.mail);
+                        let responseBody=await responsePfp.json();
+                        unique_sender.pfp = responseBody.pfp;
                         let sidebar_struct ={
                             message: message.message,
                             sender: unique_sender,
-                            timeMessage: message.timeMessage
+                            timeMessage: message.timeMessage,
                         }
                         unordered_latest_messages.push(sidebar_struct);
                     }
-                })
-            })
+                }
+            }
             //keep only latest message of each unique sender
             unordered_latest_messages.forEach(message =>{
                 unordered_latest_messages.forEach(_message =>{
@@ -373,7 +378,7 @@ class SideBar extends React.Component {
                             <ListItemButton className={this.state.sender != null ? this.state.sender.mail == message.sender.mail ? "selected_chat" : "" : ""} onClick={this.handleClickSetSender.bind(this,message.sender)} sx={{"&:hover":{backgroundColor:"#323739"}}}>
                             <ListItem alignItems="flex-start" sx={{width:"100%",height:"100%"}} >
                                     <ListItemAvatar>
-                                        <Avatar alt={message.sender.name+message.sender.surnames} src="/static/images/avatar/1.jpg" />
+                                        <Avatar sx={{ width: 50, height: 50, mr:1}} alt={message.sender.name+message.sender.surnames} src={message.sender.pfp} />
                                     </ListItemAvatar>
                                     <ListItemText
                                         sx={{color:"#ffffff", pl:1}}

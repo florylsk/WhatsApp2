@@ -118,7 +118,7 @@ class MainChat extends React.Component{
                     <Divider orientation="vertical"/>
                     <AppBar position="static" sx={{backgroundColor:"#2a2f32"}}>
                         <Toolbar>
-                            <Avatar alt={this.props.sender.name + this.props.sender.surnames} src="/test/var/123"/>
+                            <Avatar alt={this.props.sender.name + this.props.sender.surnames} src={this.props.sender.pfp} />
                             <Typography
                                 variant="h7"
                                 noWrap
