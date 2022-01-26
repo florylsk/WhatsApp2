@@ -14,6 +14,7 @@ public class User {
 
 
 
+
     public User(){}
 
     public User(long id, String name, String surnames, String mail) {
@@ -22,6 +23,7 @@ public class User {
         this.surnames = surnames;
         this.mail = mail;
     }
+
 
     public User(String name, String surnames, String mail) {
         this.name = name;
@@ -61,7 +63,6 @@ public class User {
     public void setMail(String mail) {
         this.mail = mail;
     }
-
 
     @Override
     public String toString() {

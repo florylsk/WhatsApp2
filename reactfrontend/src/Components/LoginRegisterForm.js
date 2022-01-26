@@ -1,4 +1,4 @@
-import {Container, Grid, TextField} from "@mui/material";
+import {Container, Grid, Input, TextField} from "@mui/material";
 import * as React from "react";
 import Box from "@mui/material/Box";
 
@@ -79,6 +79,10 @@ export default function LoginRegisterForm(props){
                     color="success"
                     sx={{mt:2}}
                 />
+
+                <Input type="file" name="pfp" color="success" sx={{mt:2}}>
+                    Image
+                </Input>
 
             </Grid>
             )

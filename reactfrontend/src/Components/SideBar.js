@@ -29,6 +29,7 @@ import Cookies from 'js-cookie';
 import Button from "@mui/material/Button";
 import MainChat from "./MainChat";
 import NewChatModal from "./NewChatModal";
+import axios from "axios";
 
 function compare( a, b ) {
     if ( a.timeMessage < b.timeMessage ){
@@ -45,6 +46,7 @@ let allMessages=null;
 let userDoesntExist=false;
 let sameEmail=false;
 let mainUserMail=false;
+let userImage=null;
 class SideBar extends React.Component {
     constructor(props){
         super(props);
@@ -53,6 +55,18 @@ class SideBar extends React.Component {
     }
     async componentDidMount(){
         mainUserMail=this.props.user.mail;
+        axios({
+            method: "get",
+            url: "http://localhost:8081/api/v1/users/by-mail/"+mainUserMail,
+        })
+            .then(function (response) {
+                console.log("succesful");
+                userImage = response.data.pfp;
+            })
+            .catch(function (response) {
+                userImage=null;
+            });
+
         const response = await fetch("http://localhost:8082/api/v1/messages/receiver/"+this.props.user.mail);
         const body = await response.json();
         let unique_senders = []
@@ -102,6 +116,7 @@ class SideBar extends React.Component {
                 }
             }
         }
+
         this.setState({messages:unordered_latest_messages,_loading:false,sender:null});
         this.timerID = setInterval(
             ()=> this.checkMessages(),
@@ -147,7 +162,6 @@ class SideBar extends React.Component {
                     }
                 })
             })
-            console.log(unordered_latest_messages);
             //keep only latest message of each unique sender
             unordered_latest_messages.forEach(message =>{
                 unordered_latest_messages.forEach(_message =>{
@@ -187,7 +201,6 @@ class SideBar extends React.Component {
                 )})
 
 
-            console.log(unordered_latest_messages);
             this.setState({messages:unordered_latest_messages,_loading:false,sender:senderReading});
         }
         else{
@@ -319,6 +332,7 @@ class SideBar extends React.Component {
     };
 
     render(){
+
         const {messages} = this.state;
         return (
             <Grid container spacing={0}>
@@ -327,7 +341,7 @@ class SideBar extends React.Component {
             <div>
                 <AppBar position="static" sx={{backgroundColor:"#2a2f32"}}>
                     <Toolbar>
-                        <Avatar alt={this.props.user.name+this.props.user.surnames} src="/test/var/123"/>
+                            <Avatar alt={this.props.user.name+this.props.user.surnames} src={userImage} />
                         <Typography
                             variant="h6"
                             noWrap

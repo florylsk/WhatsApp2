@@ -64,6 +64,8 @@ export default function Login(){
                 let mail = response.data.mail;
                 let id = response.data.id;
                 let token=JSON.stringify({id:id,name:name,surnames:surnames,mail:mail});
+                errorLogin=false;
+                errorRegister=false;
                 Cookies.set('userToken', token);
             })
             .catch(function (response) {
@@ -78,24 +80,35 @@ export default function Login(){
         let surnames= data.get('surnames');
         let mail= data.get('mail');
         let password= data.get('password');
-        let user = {
-            name: name,
-            surnames: surnames,
-            mail: mail,
-            password: password,
-        };
-        axios({
-            method: "post",
-            url: "http://localhost:8081/api/v1/users",
-            data: user,
-            headers: { "Content-Type": "application/json" },
-        })
-            .then(function (response) {
-                correctRegister=true;
+        let pfp = data.get("pfp");
+        var reader = new FileReader();
+        reader.readAsDataURL(pfp);
+        reader.onloadend = function() {
+            var base64data = reader.result;
+            let user = {
+                name: name,
+                surnames: surnames,
+                mail: mail,
+                password: password,
+                pfp: base64data
+            };
+
+            axios({
+                method: "post",
+                url: "http://localhost:8081/api/v1/users",
+                data: user,
+                headers: { "Content-Type": "application/json" },
             })
-            .catch(function (response) {
-                errorRegister=true;
-            });
+                .then(function (response) {
+                    correctRegister=true;
+                })
+                .catch(function (response) {
+                    errorRegister=true;
+                });
+        }
+
+
+
 
 
     }
@@ -123,7 +136,7 @@ export default function Login(){
                  justifyContent="center"
                  alignItems="center"
                  minHeight="100vh"
-                 bgcolor="#141e23">
+                 bgcolor="#111b21">
                 <Grid container spacing={2} alignItems="center" justify="center" direction="column">
                     <Grid item xs={3}>
                             <img src={TestImage} style={{borderRadius:"50%"}} />
@@ -137,11 +150,11 @@ export default function Login(){
                             type="submit"
                             variant="outlined"
                             color="success"
-
+                            sx={{mt:2}}
                         >
                             {!ShowRegister ? "Login" : "Register"}
                         </Button>
-                        <Button onClick={!ShowRegister ? handleShowRegisterClick : handleShowLoginClick} size="small" color="success" sx={{ml:2}}>Or {!ShowRegister ? "register" : "login"} here</Button>
+                        <Button onClick={!ShowRegister ? handleShowRegisterClick : handleShowLoginClick} size="small" color="success" sx={{ml:2,mt:2}}>Or {!ShowRegister ? "register" : "login"} here</Button>
                     </Grid>
                     <Grid item xs={3}>
                         <p style={{color:"#66bb6a"}}>

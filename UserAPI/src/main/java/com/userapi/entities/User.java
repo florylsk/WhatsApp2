@@ -3,6 +3,7 @@ package com.userapi.entities;
 
 
 import javax.persistence.*;
+import java.sql.Blob;
 
 @Entity(name="user")
 @Table(name="users")
@@ -23,6 +24,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Lob
+    @Column
+    private String pfp;
+
 
     public User(){}
 
@@ -32,6 +37,15 @@ public class User {
         this.mail = mail;
         this.password = password;
     }
+
+    public User(String name, String surnames, String mail, String password, String pfp) {
+        this.name = name;
+        this.surnames = surnames;
+        this.mail = mail;
+        this.password = password;
+        this.pfp=pfp;
+    }
+
     public User(String mail, String password){
         this.mail=mail;
         this.password=password;
@@ -77,6 +91,14 @@ public class User {
         this.password = password;
     }
 
+    public void setPfp(String pfp){
+        this.pfp = pfp;
+    }
+    public String getPfp(){
+        return this.pfp;
+    }
+
+
     @Override
     public String toString() {
         return "User{" +
@@ -85,6 +107,7 @@ public class User {
                 ", surnames='" + surnames + '\'' +
                 ", mail='" + mail + '\'' +
                 ", password='" + password + '\'' +
+                ", pfp='" + pfp + '\'' +
                 '}';
     }
 }
